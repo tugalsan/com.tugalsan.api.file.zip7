@@ -14,7 +14,7 @@ import net.sf.sevenzipjbinding.SevenZipException;
 import net.sf.sevenzipjbinding.impl.OutItemFactory;
 import net.sf.sevenzipjbinding.impl.RandomAccessFileOutStream;
 import net.sf.sevenzipjbinding.util.ByteArrayStream;
-import com.tugalsan.api.os.server.TS_OSUtils;
+import com.tugalsan.api.os.server.TS_OsPlatformUtils;
 
 public class CompressZip7 {
 
@@ -49,7 +49,7 @@ public class CompressZip7 {
             outItem.setDataSize((long) inBytes.length);
             outItem.setPropertyPath(outFilename);
             outItem.setPropertyLastModificationTime(new Date());
-            if (TS_OSUtils.isLinux()) {
+            if (TS_OsPlatformUtils.isLinux()) {
                 outItem.setPropertyAttributes(Integer.valueOf(0x81808000));
             }
             return outItem;
