@@ -13,7 +13,7 @@ import org.apache.commons.compress.archivers.sevenz.SevenZOutputFile;
 public class TS_FileZip7Utils {
 
     public static void compress(CharSequence name, File... files) {
-        TGS_UnSafe.execute(() -> {
+        TGS_UnSafe.run(() -> {
             try ( SevenZOutputFile out = new SevenZOutputFile(new File(name.toString()))) {
                 Arrays.stream(files).forEachOrdered(file -> addToArchiveCompression(out, file, "."));
             }
@@ -21,7 +21,7 @@ public class TS_FileZip7Utils {
     }
 
     public static void decompress(CharSequence in, File destination) {
-        TGS_UnSafe.execute(() -> {
+        TGS_UnSafe.run(() -> {
             var sevenZFile = new SevenZFile(new File(in.toString()));
             SevenZArchiveEntry entry;
             while ((entry = sevenZFile.getNextEntry()) != null) {
@@ -44,7 +44,7 @@ public class TS_FileZip7Utils {
     }
 
     private static void addToArchiveCompression(SevenZOutputFile out, File file, CharSequence dir) {
-        TGS_UnSafe.execute(() -> {
+        TGS_UnSafe.run(() -> {
             var name = dir + File.separator + file.getName();
             if (file.isFile()) {
                 var entry = out.createArchiveEntry(file, name);
