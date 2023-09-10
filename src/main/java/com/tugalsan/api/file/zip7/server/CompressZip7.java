@@ -15,6 +15,8 @@ import net.sf.sevenzipjbinding.impl.OutItemFactory;
 import net.sf.sevenzipjbinding.impl.RandomAccessFileOutStream;
 import net.sf.sevenzipjbinding.util.ByteArrayStream;
 import com.tugalsan.api.os.server.TS_OsPlatformUtils;
+import com.tugalsan.api.unsafe.client.TGS_UnSafe;
+import java.io.FileNotFoundException;
 
 public class CompressZip7 {
 
@@ -82,7 +84,7 @@ public class CompressZip7 {
         } catch (SevenZipException e) {
             System.err.println("7-Zip-JBinding-Error:");
             e.printStackTraceExtended();
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
             System.err.println("Error occurs: " + e);
         } finally {
             if (outArchive != null) {

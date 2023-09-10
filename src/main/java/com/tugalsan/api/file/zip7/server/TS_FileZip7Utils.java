@@ -37,7 +37,6 @@ public class TS_FileZip7Utils {
                 sevenZFile.read(content, 0, content.length);
                 try ( var out = new FileOutputStream(curfile)) {
                     out.write(content);
-                } catch (Exception e) {
                 }
             }
         });

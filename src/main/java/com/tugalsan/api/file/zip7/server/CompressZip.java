@@ -15,6 +15,8 @@ import net.sf.sevenzipjbinding.impl.OutItemFactory;
 import net.sf.sevenzipjbinding.impl.RandomAccessFileOutStream;
 import net.sf.sevenzipjbinding.util.ByteArrayStream;
 import com.tugalsan.api.os.server.TS_OsPlatformUtils;
+import com.tugalsan.api.unsafe.client.TGS_UnSafe;
+import java.io.FileNotFoundException;
 
 public class CompressZip {
 
@@ -66,7 +68,6 @@ public class CompressZip {
 //        IntStream.range(0, 10000000).forEachOrdered(i -> sb.append(CompressZip.class.getSimpleName()));
 //        compressZip(sb.toString(), "aligel.txt", Path.of("D:\\zip\\c.zip"));
 //    }
-
     public static void compressZip(String inText, String inFilename, Path outFile) {
         var inBytes = TGS_ByteArrayUtils.toByteArray(inText);
         compressZip(inBytes, inFilename, outFile);
@@ -84,7 +85,7 @@ public class CompressZip {
         } catch (SevenZipException e) {
             System.err.println("7-Zip-JBinding-Error:");
             e.printStackTraceExtended();
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
             System.err.println("Error occurs: " + e);
         } finally {
             if (outArchive != null) {

@@ -1,6 +1,8 @@
 package com.tugalsan.api.file.zip7.server;
 
+import com.tugalsan.api.unsafe.client.TGS_UnSafe;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -51,8 +53,8 @@ public class asd {
                     }
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException | SevenZipException e) {
+            System.err.println("Error occurs: " + e);
         } finally {
             if (inArchive != null) {
                 try {

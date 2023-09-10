@@ -1,5 +1,7 @@
 package com.tugalsan.api.file.zip7.server;
 
+import com.tugalsan.api.unsafe.client.TGS_UnSafe;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.file.Path;
@@ -24,7 +26,7 @@ public class PrintCountOfItems {
             inArchive = SevenZip.openInArchive(null, // autodetect archive type
                     new RandomAccessFileInStream(randomAccessFile));
             count = inArchive.getNumberOfItems();
-        } catch (Exception e) {
+        } catch (FileNotFoundException | SevenZipException e) {
             System.err.println("Error occurs: " + e);
         } finally {
             if (inArchive != null) {
