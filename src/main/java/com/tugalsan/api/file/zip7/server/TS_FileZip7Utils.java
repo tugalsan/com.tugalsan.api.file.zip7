@@ -4,7 +4,6 @@ import com.tugalsan.api.unsafe.client.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.*;
 import org.apache.commons.compress.archivers.sevenz.SevenZArchiveEntry;
 import org.apache.commons.compress.archivers.sevenz.SevenZFile;
@@ -14,7 +13,7 @@ public class TS_FileZip7Utils {
 
     public static void compress(CharSequence name, File... files) {
         TGS_UnSafe.run(() -> {
-            try ( SevenZOutputFile out = new SevenZOutputFile(new File(name.toString()))) {
+            try ( var out = new SevenZOutputFile(new File(name.toString()))) {
                 Arrays.stream(files).forEachOrdered(file -> addToArchiveCompression(out, file, "."));
             }
         });
@@ -50,7 +49,7 @@ public class TS_FileZip7Utils {
                 out.putArchiveEntry(entry);
                 try ( var in = new FileInputStream(file);) {
                     var b = new byte[1024];
-                    var count = 0;
+                    int count;
                     while ((count = in.read(b)) > 0) {
                         out.write(b, 0, count);
                     }
@@ -59,7 +58,7 @@ public class TS_FileZip7Utils {
             } else if (file.isDirectory()) {
                 var children = file.listFiles();
                 if (children != null) {
-                    for (File child : children) {
+                    for (var child : children) {
                         addToArchiveCompression(out, child, name);
                     }
                 }

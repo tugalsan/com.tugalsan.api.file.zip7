@@ -1,8 +1,5 @@
 package com.tugalsan.api.file.zip7.server;
 
-import net.sf.sevenzipjbinding.SevenZip;
-import net.sf.sevenzipjbinding.SevenZipNativeInitializationException;
-
 public class InitTest {
 
 //    public static void main(String[] args) {
