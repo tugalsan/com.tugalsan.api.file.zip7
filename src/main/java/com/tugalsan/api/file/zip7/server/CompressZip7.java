@@ -15,7 +15,9 @@ import net.sf.sevenzipjbinding.impl.OutItemFactory;
 import net.sf.sevenzipjbinding.impl.RandomAccessFileOutStream;
 import net.sf.sevenzipjbinding.util.ByteArrayStream;
 import com.tugalsan.api.os.server.TS_OsPlatformUtils;
+import com.tugalsan.api.union.client.TGS_UnionExcuseVoid;
 import java.io.FileNotFoundException;
+import java.util.StringJoiner;
 
 public class CompressZip7 {
 
@@ -71,35 +73,36 @@ public class CompressZip7 {
         compress7z(TGS_ByteArrayUtils.toByteArray(inText), inFilename, outFile);
     }
 
-    public static void compress7z(byte[] inBytes, CharSequence inFilename, Path outFile) {
+    public static TGS_UnionExcuseVoid compress7z(byte[] inBytes, CharSequence inFilename, Path outFile) {
         RandomAccessFile raf = null;
         IOutCreateArchive7z outArchive = null;
+        var errors = new StringJoiner(" | ");
         try {
             raf = new RandomAccessFile(outFile.toAbsolutePath().toString(), "rw");
             outArchive = SevenZip.openOutArchive7z();
             outArchive.setLevel(5);
             outArchive.createArchive(new RandomAccessFileOutStream(raf), 1, new Zip7Callback(inBytes, inFilename.toString()));
-            System.out.println("Compression operation succeeded");
-        } catch (SevenZipException e) {
-            System.err.println("7-Zip-JBinding-Error:");
-            e.printStackTraceExtended();
-        } catch (FileNotFoundException e) {
-            System.err.println("Error occurs: " + e);
+        } catch (SevenZipException | FileNotFoundException e) {
+            errors.add("Error closing archive: " + e);
         } finally {
             if (outArchive != null) {
                 try {
                     outArchive.close();
                 } catch (IOException e) {
-                    System.err.println("Error closing archive: " + e);
+                    errors.add("Error closing archive: " + e);
                 }
             }
             if (raf != null) {
                 try {
                     raf.close();
                 } catch (IOException e) {
-                    System.err.println("Error closing file: " + e);
+                    errors.add("Error closing archive: " + e);
                 }
             }
         }
+        if (!errors.toString().isEmpty()) {
+            return TGS_UnionExcuseVoid.ofExcuse("CompressZip", "compressZip", errors.toString());
+        }
+        return TGS_UnionExcuseVoid.ofVoid();
     }
 }

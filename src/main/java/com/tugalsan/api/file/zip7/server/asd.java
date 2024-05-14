@@ -1,11 +1,13 @@
 package com.tugalsan.api.file.zip7.server;
 
+import com.tugalsan.api.union.client.TGS_UnionExcuseVoid;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Arrays;
+import java.util.StringJoiner;
 import net.sf.sevenzipjbinding.ExtractOperationResult;
 import net.sf.sevenzipjbinding.IInArchive;
 import net.sf.sevenzipjbinding.SevenZip;
@@ -14,9 +16,10 @@ import net.sf.sevenzipjbinding.impl.RandomAccessFileInStream;
 
 public class asd {
 
-    public static void unzipDirWithPassword(CharSequence sourceZipFile, CharSequence destinationDir, CharSequence password) {
+    public static TGS_UnionExcuseVoid unzipDirWithPassword(CharSequence sourceZipFile, CharSequence destinationDir, CharSequence password) {
         RandomAccessFile randomAccessFile = null;
         IInArchive inArchive = null;
+        var errors = new StringJoiner(" | ");
         try {
             randomAccessFile = new RandomAccessFile(sourceZipFile.toString(), "r");
             inArchive = SevenZip.openInArchive(null, new RandomAccessFileInStream(randomAccessFile));
@@ -36,7 +39,7 @@ public class asd {
                             if (!new File(destinationDir + File.separator + item.getPath()).exists()) {
                                 new File(destinationDir.toString()).createNewFile();
                             }
-                            try ( var out = new FileOutputStream(destinationDir + File.separator + item.getPath())) {
+                            try (var out = new FileOutputStream(destinationDir + File.separator + item.getPath())) {
                                 out.write(data);
                             }
                         } catch (IOException e) {
@@ -53,24 +56,26 @@ public class asd {
                 }
             }
         } catch (FileNotFoundException | SevenZipException e) {
-            System.err.println("Error occurs: " + e);
+            errors.add("Error closing archive: " + e);
         } finally {
             if (inArchive != null) {
                 try {
                     inArchive.close();
                 } catch (SevenZipException e) {
-                    System.err.println("Error closing archive: " + e);
-                    e.printStackTrace();
+                    errors.add("Error closing archive: " + e);
                 }
             }
             if (randomAccessFile != null) {
                 try {
                     randomAccessFile.close();
                 } catch (IOException e) {
-                    System.err.println("Error closing file: " + e);
-                    e.printStackTrace();
+                    errors.add("Error closing archive: " + e);
                 }
             }
         }
+        if (!errors.toString().isEmpty()) {
+            return TGS_UnionExcuseVoid.ofExcuse("CompressZip", "compressZip", errors.toString());
+        }
+        return TGS_UnionExcuseVoid.ofVoid();
     }
 }
