@@ -1,18 +1,9 @@
 package com.tugalsan.api.file.zip7.server;
 
-import com.tugalsan.api.union.client.TGS_UnionExcuseVoid;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.util.Arrays;
-import java.util.StringJoiner;
-import net.sf.sevenzipjbinding.ExtractOperationResult;
-import net.sf.sevenzipjbinding.IInArchive;
-import net.sf.sevenzipjbinding.SevenZip;
-import net.sf.sevenzipjbinding.SevenZipException;
-import net.sf.sevenzipjbinding.impl.RandomAccessFileInStream;
+import module com.tugalsan.api.union;
+import module sevenzipjbinding;
+import java.io.*;
+import java.util.*;
 
 public class asd {
 
@@ -47,7 +38,8 @@ public class asd {
                         }
                         hash[0] |= Arrays.hashCode(data);
                         return data.length; // Return amount of proceed data
-                    }, password.toString()); /// password.
+                    }, password.toString());
+                    /// password.
                     if (result == ExtractOperationResult.OK) {
                         System.out.println(String.format("%9X | %s", hash[0], item.getPath()));
                     } else {

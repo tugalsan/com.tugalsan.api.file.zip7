@@ -1,14 +1,9 @@
 package com.tugalsan.api.file.zip7.server;
 
-
-import com.tugalsan.api.function.client.maythrowexceptions.checked.TGS_FuncMTCUtils;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import module com.tugalsan.api.function;
+import module org.apache.commons.compress;
+import java.io.*;
 import java.util.*;
-import org.apache.commons.compress.archivers.sevenz.SevenZArchiveEntry;
-import org.apache.commons.compress.archivers.sevenz.SevenZFile;
-import org.apache.commons.compress.archivers.sevenz.SevenZOutputFile;
 
 public class TS_FileZip7Utils {
 

@@ -1,23 +1,12 @@
 package com.tugalsan.api.file.zip7.server;
 
-import com.tugalsan.api.bytes.client.TGS_ByteArrayUtils;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.nio.file.Path;
-import java.util.Date;
-import net.sf.sevenzipjbinding.IOutCreateArchive7z;
-import net.sf.sevenzipjbinding.IOutCreateCallback;
-import net.sf.sevenzipjbinding.IOutItem7z;
-import net.sf.sevenzipjbinding.ISequentialInStream;
-import net.sf.sevenzipjbinding.SevenZip;
-import net.sf.sevenzipjbinding.SevenZipException;
-import net.sf.sevenzipjbinding.impl.OutItemFactory;
-import net.sf.sevenzipjbinding.impl.RandomAccessFileOutStream;
-import net.sf.sevenzipjbinding.util.ByteArrayStream;
-import com.tugalsan.api.os.server.TS_OsPlatformUtils;
-import com.tugalsan.api.union.client.TGS_UnionExcuseVoid;
-import java.io.FileNotFoundException;
-import java.util.StringJoiner;
+import module com.tugalsan.api.bytes;
+import module com.tugalsan.api.os;
+import module com.tugalsan.api.union;
+import module sevenzipjbinding;
+import java.io.*;
+import java.nio.file.*;
+import java.util.*;
 
 public class CompressZip7 {
 

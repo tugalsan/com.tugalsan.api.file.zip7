@@ -1,13 +1,8 @@
 package com.tugalsan.api.file.zip7.server;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.nio.file.Path;
-import net.sf.sevenzipjbinding.IInArchive;
-import net.sf.sevenzipjbinding.SevenZip;
-import net.sf.sevenzipjbinding.SevenZipException;
-import net.sf.sevenzipjbinding.impl.RandomAccessFileInStream;
+import module sevenzipjbinding;
+import java.io.*;
+import java.nio.file.*;
 
 public class PrintCountOfItems {
 
@@ -15,7 +10,6 @@ public class PrintCountOfItems {
 //        System.out.println("zip: " + getCountOfItems(Path.of("D:\\zip\\a.zip")));
 //        System.out.println("7z : " + getCountOfItems(Path.of("D:\\zip\\a.7z")));
 //    }
-
     public static Integer getCountOfItems(Path compressedFile) {
         RandomAccessFile randomAccessFile = null;
         IInArchive inArchive = null;
